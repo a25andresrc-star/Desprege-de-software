@@ -1,0 +1,47 @@
+
+name: Executable Python
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: test_script
+        run: python -m unittest test_utils.py
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: success()
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Build release distributions
+        run: |
+          # Instala o paquete que nos permite empaquetar o paquete
+          pip install pyinstaller 
+          # Realiza o empaquetado. O executable crease no directorio dist co nome main
+          pyinstaller --onefile main.py
+
+      - name: Gardar o executable como artefacto
+        uses: actions/upload-artifact@v6
+        with:
+          name: executable
+          path: dist/main
+
