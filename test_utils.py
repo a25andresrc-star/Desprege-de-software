@@ -12,7 +12,7 @@ class TestUtils(unittest.TestCase):
     self.assertFalse(is_prime(4))
     self.assertFalse(is_prime(8))
     self.assertFalse(is_prime(10))
-def test_negative_number(self):
-  self.assertEqual(is_prime(-3), "Os números negativos non están permitidos")
+  def test_negative_number(self):
+    self.assertEqual(is_prime(-3), "Os números negativos non están permitidos")
 if __name__ == "__main__":
   unittest.main()
